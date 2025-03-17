@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap');
+
+:root{
+  --theme-color: #21063e;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+*{
+  padding: 0;
+  margin:0;
+  box-sizing:border-box;
+  font-family: Outfit;
+  scroll-behavior: smooth;
+}
+
+body{
+  min-height: 100vh; 
+}
+
+a{
+  text-decoration: none;
+  color:inherit
+}
+.app{
+  width: 80%;
+  margin: auto;
+}
+
+@keyframes fadeIn{
+  0% {opacity: 0;}
+  100% {opacity: 100;}
+}
