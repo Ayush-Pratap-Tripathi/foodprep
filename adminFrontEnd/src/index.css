@@ -4,6 +4,10 @@
   --theme-color: #21063e;
 }
 
+html{
+  font-size: 62.5%;
+}
+
 *{
   padding: 0;
   margin: 0;
@@ -23,4 +27,7 @@ hr{
   border: none;
   height: 1px;
   background-color: #a9a9a9;
+}
+.app{
+  font-size: 1.6rem;
 }
