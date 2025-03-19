@@ -25,6 +25,10 @@
  .sidebar-option img{
      width:28px;
  }
+ .sidebar-option.active{
+     background-color: rgb(242 244 255);
+     border-color: var(--theme-color);
+ }
  @media (max-width:900px) {
      .sidebar-option p{
          display: none;
