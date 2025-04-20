@@ -1,30 +1,33 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/dbConn');
+const express = require('express')
+const cors = require('cors')
 
-// Load environment variables
-dotenv.config();
+const connectDB = require('./config/dbConn')
+const foodRouter = require('./routes/foodRoute')
+const userRouter = require('./routes/userRoute')
+const cartRouter = require('./routes/cartRoute')
+const orderRouter = require('./routes/orderRoute')
 
-// Connect to MongoDB
-connectDB();
-
+//app config
 const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json()); // For parsing JSON in requests
-
-const userRoutes = require('./routes/userRoutes');
-
-app.use('/api/users', userRoutes);
-
-
-// Simple test route
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
-
-// Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+require('dotenv').config();
+
+//middlewares
+app.use(express.json());
+app.use(cors());
+
+connectDB()
+//routes
+app.use('/api/food', foodRouter);
+app.use('/api/user', userRouter);
+app.use('/api/cart', cartRouter);
+app.use('/api/order', orderRouter);
+app.use('/image', express.static('uploads'))
+
+app.get('/', (req, res) => {
+    res.send("API Working")
+})
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+})
