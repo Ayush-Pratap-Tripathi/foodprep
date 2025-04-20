@@ -1,0 +1,7 @@
+.app {
+    font-size: 1.6rem;
+}
+
+.app-content {
+    display: flex;
+}

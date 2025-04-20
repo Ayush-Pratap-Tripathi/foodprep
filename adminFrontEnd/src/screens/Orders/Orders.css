@@ -1,0 +1,146 @@
+.order.screen {
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.order h3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--theme-color);
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.order-item {
+    display: flex;
+    gap: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+    position: relative;
+}
+
+.order-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.failed-order {
+    background-color: #fff0f0;
+    border-left: 6px solid #ff6b6b;
+    position: relative;
+}
+
+.payment-failed-badge {
+    background-color: #ff6b6b;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-header {
+    position: relative;
+    height: 0;
+}
+
+.failed-status {
+    color: #e74c3c !important;
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.order-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.order-details {
+    flex: 1;
+}
+
+.order-item-food {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.order-item-name {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.order-item-address {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.order-item select {
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.order-item select:hover {
+    border-color: #bbb;
+}
+
+.no-orders {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #aaa;
+    margin-top: 2rem;
+    padding: 2rem;
+}
+
+.failed-order::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 2px rgba(231, 76, 60, 0.3);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .order-item {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .order.screen {
+        max-width: 95%;
+        padding: 15px;
+    }
+    
+    .payment-failed-badge {
+        display: none;
+    }
+}

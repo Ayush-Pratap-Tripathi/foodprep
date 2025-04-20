@@ -1,48 +1,48 @@
-.screen{
-    width:70%;
-    margin-left: max(5vw,25px);
+.screen {
+    width: 70%;
+    margin-left: max(5vw, 25px);
     margin-block: 50px;
-    color:#6d6d6d;
+    color: #6d6d6d;
     font-size: 1.6rem;
 }
 
-.container{
+.container {
     place-self: center;
-    width: max(40%,300px);
+    width: max(40%, 300px);
     border: 1px solid var(--theme-color);
     border-radius: 2%;
     padding: 5%;
 }
 
-.screen form{
-    gap:20px;
+.screen form {
+    gap: 20px;
 }
 
-.add-img-upload img{
+.add-img-upload img {
     width: 120px;
     cursor: pointer;
 }
 
-.add-category{
+.add-category {
     min-width: 125px;
 }
 
 .add-product-name input,
 .add-product-desc textarea,
 .add-price input,
-.add-category select{
+.add-category select {
     padding: 10px;
     border: 1px solid var(--theme-color);
     border-radius: 5px;
     font-size: 1.4rem;
-    color:#333;
+    color: #333;
 }
 
-.add-product-desc textarea{
+.add-product-desc textarea {
     resize: none;
 }
 
-.add-btn{
+.add-btn {
     max-width: 120px;
     padding: 10px;
     border: none;
@@ -52,10 +52,11 @@
     border-radius: 5px;
 }
 
-.add-category-price{
+.add-category-price {
     display: flex;
-    gap:30px;
+    gap: 30px;
 }
-.add-price input{
+
+.add-price input {
     width: 100%;
 }
