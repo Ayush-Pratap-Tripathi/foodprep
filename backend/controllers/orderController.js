@@ -1,49 +1,59 @@
-const userModel = require('../models/userModel');
-const orderModel = require('../models/orderModel');
-require('dotenv').config();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
-// Update this to your deployed frontend URL
-const frontendURL = "https://foodprepuser-vip1.onrender.com";
+const userModel = require('../models/userModel')
+const orderModel = require('../models/orderModel')
+require('dotenv').config()
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const placeOrder = async (req, res) => {
+    // Determine the correct frontend URL based on environment
+    let frontendURL;
+
+    if (process.env.NODE_ENV === 'production') {
+        // Check if the request is from the user or admin frontend
+        if (req.body.isAdmin) {
+            frontendURL = "https://foodprep-admin.vercel.app"; // Admin frontend
+        } else {
+            frontendURL = "https://foodprep-user.vercel.app"; // User frontend
+        }
+    } else {
+        frontendURL = "http://localhost:5000"; // Localhost for local testing
+    }
+
     try {
-        // 1. Create a new order
+        // Create new order in DB
         const newOrder = await orderModel.create({
             userId: req.userId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
         });
-
-        // 2. Clear user's cart after placing order
+        
+        // Empty cart after order placement
         await userModel.findByIdAndUpdate(req.userId, { cartData: {} });
 
-        // 3. Prepare line items for Stripe
-        const line_items = req.body.items.map(item => ({
+        // Prepare line items for Stripe payment session
+        const line_items = req.body.items.map((item) => ({
             price_data: {
                 currency: 'INR',
                 product_data: {
                     name: item.name,
                 },
-                unit_amount: item.price * 100, // in paisa
+                unit_amount: item.price * 100
             },
-            quantity: item.quantity,
+            quantity: item.quantity
         }));
 
-        // 4. Add delivery charge
         line_items.push({
             price_data: {
                 currency: 'INR',
                 product_data: {
                     name: 'Delivery Charge',
                 },
-                unit_amount: 20 * 100,
+                unit_amount: 20 * 100
             },
-            quantity: 1,
+            quantity: 1
         });
 
-        // 5. Create Stripe checkout session
+        // Create Stripe checkout session
         const session = await stripe.checkout.sessions.create({
             line_items,
             mode: 'payment',
@@ -51,13 +61,14 @@ const placeOrder = async (req, res) => {
             cancel_url: `${frontendURL}/verify?success=false&orderId=${newOrder._id}`,
         });
 
+        // Respond with session URL for payment
         res.status(200).json({ session_url: session.url });
 
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error (Payment)" });
     }
-};
+}
 
 const verifyOrder = async (req, res) => {
     const { orderId, success } = req.body;
@@ -70,45 +81,39 @@ const verifyOrder = async (req, res) => {
             res.status(204).json({ message: "Payment Failed" });
         }
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
 
 const userOrder = async (req, res) => {
     try {
         const orders = await orderModel.find({ userId: req.userId });
         res.status(200).json({ data: orders });
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
 
 const listOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({});
         res.json({ data: orders });
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
 
 const updateStatus = async (req, res) => {
     try {
         await orderModel.findByIdAndUpdate(req.body.orderId, { status: req.body.status });
         res.json({ message: "Status Updated" });
     } catch (error) {
-        console.error(error);
+        console.log(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+}
 
-module.exports = {
-    placeOrder,
-    verifyOrder,
-    userOrder,
-    listOrders,
-    updateStatus,
-};
+module.exports = { placeOrder, verifyOrder, userOrder, listOrders, updateStatus };
