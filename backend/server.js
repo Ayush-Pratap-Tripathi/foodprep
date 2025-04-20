@@ -1,33 +1,34 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-const connectDB = require('./config/dbConn')
-const foodRouter = require('./routes/foodRoute')
-const userRouter = require('./routes/userRoute')
-const cartRouter = require('./routes/cartRoute')
-const orderRouter = require('./routes/orderRoute')
+dotenv.config(); // Load env vars early
 
-//app config
 const app = express();
-const PORT = process.env.PORT || 5000;
-require('dotenv').config();
-
-//middlewares
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+app.use('/Uploads', express.static('Uploads')); // Serve static uploads
 
-connectDB()
-//routes
-app.use('/api/food', foodRouter);
-app.use('/api/user', userRouter);
-app.use('/api/cart', cartRouter);
-app.use('/api/order', orderRouter);
-app.use('/image', express.static('uploads'))
+// Example MongoDB connection
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
+// Routes go here
 app.get('/', (req, res) => {
-    res.send("API Working")
-})
+  res.send('Server is running...');
+});
 
+// Example route placeholder
+// const itemRouter = require('./routes/itemRoute');
+// app.use('/api/items', itemRouter);
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});
