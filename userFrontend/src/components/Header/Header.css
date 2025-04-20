@@ -1,55 +1,77 @@
-.header{
+.header {
     height: 34vw;
+    width: 80%;
     margin: 30px auto;
     background: url('/header_img.png') no-repeat;
     background-size: cover;
     position: relative;
-    border-radius: 20px;;
+    border-radius: 20px;
+    ;
 }
 
-.header-contents{
+.header-contents {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap:1.5vw;
+    gap: 1.5vw;
     max-width: 50%;
     bottom: 10%;
-    left:6vw;
+    left: 6vw;
     animation: fadeIn 3s;
 }
 
-.header-contents h2{
-    font-size: max(4.5vw,2.2rem);
+.header-contents h2 {
+    font-size: max(4.5vw, 2.2rem);
     color: var(--theme-color);
     text-shadow: .7px .7px 0px #fff,
-                -.7px .7px 0px #fff,
-                .7px -.7px 0px #fff,
-                -.7px -.7px 0px #fff;
+        -.7px .7px 0px #fff,
+        .7px -.7px 0px #fff,
+        -.7px -.7px 0px #fff;
     font-weight: 500;
 }
 
-.header-contents p{
-    color:var(--theme-color);
+.header-contents p {
+    color: var(--theme-color);
     font-size: 1vw;
 }
 
-.header-contents button{
-    border:none;
-    color:#747474;
+.header button {
+    background: white;
+    color: var(--text-color);
+    font-size: 1.9rem;
+    font-weight: 400;
+    padding: 2rem 3.5rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header button:hover {
+    background: rgb(245, 245, 245);
+    color: var(--theme-color);
     font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: white;
-    border-radius: 20px;
-    cursor:pointer
 }
 
 @media (max-width: 1050px) {
-    .header-contents{
+    .header-contents {
         max-width: 65%;
-        gap:max(5vw,25px);
+        gap: max(5vw, 25px);
     }
-    .header-contents p{
+
+    .header-contents p {
         display: none;
+    }
+}
+
+@media (max-width: 536px) {
+    .header button {
+        display: none;
+    }
+
+    .header-contents h2 {
+        padding-bottom: 5vh;
     }
 }
